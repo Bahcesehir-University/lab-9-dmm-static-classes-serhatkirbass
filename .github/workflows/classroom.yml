@@ -1,0 +1,80 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Construction & Destruction
+      id: construction-destruction
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Construction & Destruction
+        setup-command: ''
+        command: make test_group1
+        timeout: 2
+        max-score: 20
+    - name: Add & Get Operations
+      id: add-get-operations
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Add & Get Operations
+        setup-command: ''
+        command: make test_group2
+        timeout: 2
+        max-score: 20
+    - name: RemoveLast
+      id: removelast
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: RemoveLast
+        setup-command: ''
+        command: make test_group3
+        timeout: 2
+        max-score: 10
+    - name: Copy Constructor (Deep Copy)
+      id: copy-constructor-deep-copy
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Copy Constructor (Deep Copy)
+        setup-command: ''
+        command: make test_group4
+        timeout: 2
+        max-score: 15
+    - name: Copy Assignment Operator
+      id: copy-assignment-operator
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Copy Assignment Operator
+        setup-command: ''
+        command: make test_group5
+        timeout: 2
+        max-score: 15
+    - name: Tracker (Static Class)
+      id: tracker-static-class
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Tracker (Static Class)
+        setup-command: ''
+        command: make test_group6
+        timeout: 2
+        max-score: 20
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CONSTRUCTION-DESTRUCTION_RESULTS: "${{steps.construction-destruction.outputs.result}}"
+        ADD-GET-OPERATIONS_RESULTS: "${{steps.add-get-operations.outputs.result}}"
+        REMOVELAST_RESULTS: "${{steps.removelast.outputs.result}}"
+        COPY-CONSTRUCTOR-DEEP-COPY_RESULTS: "${{steps.copy-constructor-deep-copy.outputs.result}}"
+        COPY-ASSIGNMENT-OPERATOR_RESULTS: "${{steps.copy-assignment-operator.outputs.result}}"
+        TRACKER-STATIC-CLASS_RESULTS: "${{steps.tracker-static-class.outputs.result}}"
+      with:
+        runners: construction-destruction,add-get-operations,removelast,copy-constructor-deep-copy,copy-assignment-operator,tracker-static-class
