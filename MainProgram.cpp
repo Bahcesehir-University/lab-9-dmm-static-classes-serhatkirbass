@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -424,7 +423,6 @@ private:
     double x;
     double y;
 public:
-    // TODO 1 & 2 & 3 & 4 & 5
     Point(double x, double y) : x(x), y(y) {}
 
     double getX() const { return x; }   
@@ -442,7 +440,6 @@ private:
     Point topLeft;
     Point bottomRight;
 public:
-    // TODO 6 & 7 & 8 & 9 & 10 & 11
     RectangleClass(double x1, double y1, double x2, double y2)
         : topLeft(x1, y1), bottomRight(x2, y2) {}  
 
@@ -466,7 +463,6 @@ public:
     friend bool isSameSize(const RectangleClass& r1, const RectangleClass& r2);
 };
 
-// TODO 12
 bool isSameSize(const RectangleClass& r1, const RectangleClass& r2) {
     return r1.getArea() == r2.getArea();  
 }
@@ -475,7 +471,6 @@ class ConstDemo {
 private:
     int value;
 public:
-    // TODO 13 & 14 & 15 & 16
     ConstDemo(int v) : value(v) {}  
 
     int getValue() const { return value; }  
@@ -541,28 +536,23 @@ public:
     static void resetCount();
 };
 
-// TODO 1: Initialize Tracker's static member variable
 int Tracker::objectCount = 0;
 
-// TODO 2, 3, 4, 5
 void Tracker::objectCreated() { objectCount++; }
 void Tracker::objectDestroyed() { objectCount--; }
 int Tracker::getActiveCount() { return objectCount; }
 void Tracker::resetCount() { objectCount = 0; }
 
-// TODO 6: Constructor
 IntArray::IntArray(int cap) : capacity(cap), count(0) {
     data = new int[capacity];
     Tracker::objectCreated();
 }
 
-// TODO 7: Destructor
 IntArray::~IntArray() {
     delete[] data;
     Tracker::objectDestroyed();
 }
 
-// TODO 8: Copy Constructor
 IntArray::IntArray(const IntArray& other) : capacity(other.capacity), count(other.count) {
     data = new int[capacity];
     for (int i = 0; i < count; i++) {
@@ -571,7 +561,6 @@ IntArray::IntArray(const IntArray& other) : capacity(other.capacity), count(othe
     Tracker::objectCreated();
 }
 
-// TODO 9: Copy Assignment Operator
 IntArray& IntArray::operator=(const IntArray& other) {
     if (this != &other) {
         delete[] data;
@@ -585,7 +574,6 @@ IntArray& IntArray::operator=(const IntArray& other) {
     return *this;
 }
 
-// TODO 10
 bool IntArray::add(int value) {
     if (count < capacity) {
         data[count] = value;
@@ -595,7 +583,6 @@ bool IntArray::add(int value) {
     return false;
 }
 
-// TODO 11
 int IntArray::get(int index) const {
     if (index >= 0 && index < count) {
         return data[index];
@@ -603,16 +590,12 @@ int IntArray::get(int index) const {
     return -1;
 }
 
-// TODO 12
 int IntArray::size() const { return count; }
 
-// TODO 13
 int IntArray::getCapacity() const { return capacity; }
 
-// TODO 14
 bool IntArray::isEmpty() const { return count == 0; }
 
-// TODO 15
 bool IntArray::removeLast() {
     if (count > 0) {
         count--;
@@ -652,3 +635,18 @@ void main_lab5() {
         IntArray temp(3);
         cout << "    Inside scope - Active objects: " << Tracker::getActiveCount() << endl;
     }
+    cout << "    After scope  - Active objects: " << Tracker::getActiveCount() << endl;
+    cout << endl;
+}
+
+// ============================================================================
+// MAIN FUNCTION
+// ============================================================================
+int main() {
+    main_lab1();
+    main_lab2();
+    main_lab3();
+    main_lab4();
+    main_lab5();
+    return 0;
+}
